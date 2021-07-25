@@ -1,15 +1,17 @@
-const esbuild = require('esbuild')
-const fs = require('fs')
- 
+import esbuild from 'esbuild';
+import svg from 'esbuild-plugin-svg';
+import fs from 'fs';
 
 
-fs.watch('./src',(event,filename)=>{
+
+fs.watch('./src', { recursive: true },(event,filename)=>{
     if (filename && event == 'change') {
         console.log(`${filename}文件发生更新`)
         esbuild.build({
             entryPoints: ['./src/index.js'],
             bundle: true,
             outfile: './dist/index.js',
+            plugins: [svg()]
           }).then(
             ({ stderr, warnings }) => {
               // const output = fs.readFileSync('./example.min.js', 'utf8')

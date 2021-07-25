@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node esbuild.js"
+    "build": "node esbuild.mjs"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/River-Chart/canvas-edit#readme",
   "dependencies": {
     "esbuild": "^0.8.18"
+  },
+  "devDependencies": {
+    "esbuild-plugin-svg": "^0.1.0"
   }
 }

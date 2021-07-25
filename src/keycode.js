@@ -1,0 +1,20 @@
+export const keycode = {
+  Backspace: 8,
+  Tab: 9,
+  Enter: 13,
+  Shift: 16,
+  Ctrl: 17,
+  Alt: 18,
+  CapsLock: 20,
+  Esc: 27,
+  Space: 32,
+  End: 35,
+  Home: 36,
+  Left: 37,
+  Up: 38,
+  Right: 39,
+  Down: 40,
+  Insert: 45,
+  Delete: 46,
+};
+export default keycode;
