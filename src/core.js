@@ -16,7 +16,8 @@ export function setCanvas(c){
 class Core {
 
   constructor(){
-    this.draw = debounce(this.draw, 5)
+    // this.draw = debounce(this.draw, 5)
+    this.mousemove = debounce(this.mousemove, 5)
   }
 
   tool_edit = new ToolEdit()

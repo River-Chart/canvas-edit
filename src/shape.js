@@ -114,9 +114,8 @@ export class Shape {
       // ctx.lineWidth = this.style.stroke_width;
       // console.log(core.mouseY, core.mouseX, this.path.points)
       // console.log(core.mouseY + (canvas.width / 2), core.mouseX + (canvas.height / 2))
-      console.log( core.mouseX_raw + this.position.x, core.mouseY_raw  + this.position.y )
-      console.log( this.position.x, this.position.y)
-       let isIn = ctx.isPointInPath(core.mouseX_raw + this.position.x, core.mouseY_raw  + this.position.y) 
+  
+       let isIn = ctx.isPointInPath(core.mouseX_raw , core.mouseY_raw ) 
        if(isIn) {
         // console.log(isIn)
             ctx.strokeStyle = "#00ff00";
