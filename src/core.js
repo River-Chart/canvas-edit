@@ -4,8 +4,7 @@ export const gui = {};
 import { Project } from './project'
 import { ToolEdit } from './tools/edit'
 // import bg from '../bg.svg'
-import { bgImg } from './utils'
-import { debounce } from './decorator'
+import { bgImg, debounce } from './utils'
 
 
 export function setCanvas(c){
@@ -15,6 +14,11 @@ export function setCanvas(c){
 
 
 class Core {
+
+  constructor(){
+    this.draw = debounce(this.draw, 5)
+  }
+
   tool_edit = new ToolEdit()
   project = new Project();
   mode = 0;
@@ -162,7 +166,7 @@ class Core {
   draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    // ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.scale(this.viewport.zoom, this.viewport.zoom);
     ctx.translate(this.viewport.x, this.viewport.y);
 
@@ -178,7 +182,7 @@ class Core {
 
     ctx.translate(-this.viewport.x, -this.viewport.y);
     ctx.scale(1 / this.viewport.zoom, 1 / this.viewport.zoom);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    // ctx.translate(-canvas.width / 2, -canvas.height / 2);
   }
 
   draw_grid() {
@@ -315,10 +319,8 @@ class Core {
     var raw_x = e.pageX ;
     var raw_y = e.pageY;
 
-    core.mouseX_raw =
-      (raw_x - canvas.width / 2) / core.viewport.zoom - core.viewport.x;
-    core.mouseY_raw =
-      (raw_y - canvas.height / 2) / core.viewport.zoom - core.viewport.y;
+    core.mouseX_raw = raw_x / core.viewport.zoom - core.viewport.x;
+    core.mouseY_raw = raw_y / core.viewport.zoom - core.viewport.y;
 
     if (core.mouse_pressed[2] && !e.shiftKey) {
       var dx = core.mouseX_raw - this.pmouseX_raw;
@@ -331,10 +333,8 @@ class Core {
       core.draw_grid();
     }
 
-    core.mouseX_raw =
-      (raw_x - canvas.width / 2) / core.viewport.zoom - core.viewport.x;
-    core.mouseY_raw =
-      (raw_y - canvas.height / 2) / core.viewport.zoom - core.viewport.y;
+    core.mouseX_raw = raw_x / core.viewport.zoom - core.viewport.x;
+    core.mouseY_raw = raw_y / core.viewport.zoom - core.viewport.y;
 
     if (!core.snap) {
       core.mouseX = core.mouseX_raw;
@@ -433,4 +433,6 @@ class Core {
     }
   }
 }
+
 export const core = new Core();
+window.core = core

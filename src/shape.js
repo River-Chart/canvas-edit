@@ -1,4 +1,4 @@
-import { ctx, core } from './core'
+import { ctx, core,canvas } from './core'
 import  * as utils  from './utils'
 
 export class Shape {
@@ -38,7 +38,7 @@ export class Shape {
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
       }
-
+      
       ctx.translate(this.position.x, this.position.y);
       ctx.beginPath();
 
@@ -107,6 +107,21 @@ export class Shape {
         }
       }
 
+      // draw_stroke
+      // stroke
+      // stroke_width
+      // ctx.strokeStyle = this.style.stroke;
+      // ctx.lineWidth = this.style.stroke_width;
+      // console.log(core.mouseY, core.mouseX, this.path.points)
+      // console.log(core.mouseY + (canvas.width / 2), core.mouseX + (canvas.height / 2))
+      console.log( core.mouseX_raw + this.position.x, core.mouseY_raw  + this.position.y )
+      console.log( this.position.x, this.position.y)
+       let isIn = ctx.isPointInPath(core.mouseX_raw + this.position.x, core.mouseY_raw  + this.position.y) 
+       if(isIn) {
+        // console.log(isIn)
+            ctx.strokeStyle = "#00ff00";
+      ctx.lineWidth = 3;
+       }
       if (this.path.closed) {
         ctx.closePath();
       }

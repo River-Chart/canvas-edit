@@ -40,8 +40,7 @@ var MODE_SELECT = 3;
 			for(var i = 0; i < core.project.shapes.length; i++) {
 				var my_shape = core.project.shapes[i];
 
-				if(utils.dist(core.mouseX_raw, core.mouseY_raw,
-						my_shape.position.x, my_shape.position.y) < 10/core.viewport.zoom) {
+				if(utils.dist(core.mouseX_raw, core.mouseY_raw, my_shape.position.x, my_shape.position.y) < 10/core.viewport.zoom) {
 					this.selected_point = -2;
 					this.mode = MODE_MOVE_SHAPE;
 					core.select_shape(i);
@@ -52,8 +51,7 @@ var MODE_SELECT = 3;
 				for(var j = 0; j < my_shape.path.points.length; j++) {
 					var p = my_shape.path.points[j];
 
-					if(utils.dist(core.mouseX_raw, core.mouseY_raw,
-							p.x + my_shape.position.x, p.y + my_shape.position.y) < 10/core.viewport.zoom) {
+					if(utils.dist(core.mouseX_raw, core.mouseY_raw, p.x + my_shape.position.x, p.y + my_shape.position.y) < 10/core.viewport.zoom) {
 						this.selected_point = j;
 						this.mode = MODE_MOVE_POINT;
 						core.select_shape(i);
