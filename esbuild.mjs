@@ -1,5 +1,4 @@
 import esbuild from 'esbuild';
-import svg from 'esbuild-plugin-svg';
 import fs from 'fs';
 
 
@@ -11,7 +10,6 @@ fs.watch('./src', { recursive: true },(event,filename)=>{
             entryPoints: ['./src/index.js'],
             bundle: true,
             outfile: './dist/index.js',
-            plugins: [svg()]
           }).then(
             ({ stderr, warnings }) => {
               // const output = fs.readFileSync('./example.min.js', 'utf8')

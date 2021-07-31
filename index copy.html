@@ -1,0 +1,308 @@
+<html>
+  <head>
+    <style>
+      body {
+        /* background: #f0f0f0; */
+        font-family: sans-serif;
+        color: #333;
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        /* background: url(./bg.svg);
+        background-size: 20px; */
+      }
+
+      input,
+      textarea {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .r {
+        float: right;
+      }
+
+      #sidebar {
+        position: fixed;
+        top: 45px;
+        left: 0px;
+
+        width: 200px;
+        height: calc(100% - 70px);
+        padding: 10px;
+
+        background: #f9f9f9;
+
+        overflow-y: auto;
+        cursor: default;
+        border-right: 1px solid #e5e5e5;
+      }
+
+      #sidebar button {
+        transition-duration: 0.5s;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      #sidebar button:not(.selected) {
+        transition-duration: 0.5s;
+        background: #f9f9f9;
+      }
+
+      #sidebar .selected {
+        transition-duration: 0.5s;
+        background: #336edd;
+      }
+
+      #sidebar button:hover {
+        transition-duration: 0.1s;
+        background: #336edd;
+      }
+
+      #sidebar h1 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 12px;
+        color: #444444;
+        padding-bottom: 10px;
+      }
+
+      #sidebar .box {
+        width: calc(100% - 10px);
+        height: 30px;
+        margin-left: 10px;
+      }
+
+      #sidebar .box > input {
+        float: right;
+      }
+
+      #sidebar input[type="color"] {
+        transition-duration: 0.5s;
+        background: #f9f9f9;
+        border: none;
+        height: 30px;
+        padding-left: 0px;
+        padding-right: 0px;
+        cursor: pointer;
+      }
+
+      #sidebar input[type="color"]:hover {
+        transition-duration: 0.1s;
+        background: #336edd;
+      }
+
+      #sidebar input[type="number"] {
+        transition-duration: 0.5s;
+        background: #f9f9f9;
+        border: 1px solid grey;
+        padding-left: 3px;
+        padding-right: 5px;
+        width: 70px;
+
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+
+      #sidebar input[type="checkbox"] {
+        cursor: pointer;
+      }
+
+      #sidebar #draw_stroke {
+        margin-left: 10px;
+        margin-top: 7px;
+      }
+
+      #sidebar #draw_fill {
+        margin-left: 10px;
+        margin-top: 7px;
+      }
+
+      #sidebar select {
+        transition-duration: 0.5s;
+        background: #f9f9f9;
+        border: 1px solid grey;
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 70px;
+        float: right;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      #sidebar select option {
+        border: none;
+      }
+
+      #sidebar select:hover {
+        background: #336edd;
+      }
+
+      ::selection {
+        background: #336edd;
+      }
+
+      ::-moz-selection {
+        background: #336edd;
+      }
+
+      #sidebar > .object {
+      }
+
+      #overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 9;
+      }
+
+      #dialog_container {
+        position: absolute;
+
+        top: 50px;
+        left: 0;
+        right: 0;
+        width: 50%;
+        margin: auto;
+        padding: 20px;
+        box-sizing: border-box;
+
+        background: #f5f5f5;
+
+        max-height: calc(100% - 100px);
+        overflow-y: auto;
+        cursor: default;
+
+        box-shadow: 1px 1px 2px grey;
+
+        z-index: 10;
+      }
+
+      #dialog_container input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+
+        background: #f9f9f9;
+        border: 1px solid grey;
+        padding: 4px;
+      }
+
+      #dialog_container ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #dialog_container ul > li {
+        transition-duration: 0.5s;
+
+        padding: 5px;
+      }
+
+      #dialog_container ul > li:hover {
+        transition-duration: 0.1s;
+
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: #336edd;
+      }
+
+      #menu {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+
+        width: 100%;
+        height: 45px;
+
+        background: rgb(44, 44, 44);
+
+        padding-left: auto;
+        padding-right: auto;
+
+        box-sizing: border-box;
+
+        z-index: 3;
+
+        display: flex;
+      }
+
+      #menu > div {
+        display: flex;
+        flex-basis: 100px;
+        flex-grow: 1;
+      }
+
+      #menu > #tools {
+        justify-content: center;
+      }
+
+      #menu button {
+        transition-duration: 0.3s;
+        background: #222;
+        color: #f5f5f5;
+        border: none;
+        padding: 14px;
+        margin: 0px;
+        cursor: pointer;
+      }
+
+      #menu button:not(.selected) {
+        transition-duration: 0.5s;
+        background: rgb(44, 44, 44);
+        border: none;
+      }
+
+      #menu .selected {
+        transition-duration: 0.1s;
+        background: #336edd;
+      }
+
+      #menu button:hover {
+        transition-duration: 0.1s;
+        background: #336edd;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- gui -->
+    <canvas id="canvas_grid"></canvas>
+    <canvas id="canvas"></canvas>
+
+    <div id="sidebar"></div>
+
+    <div id="menu">
+      <div id="project">
+        <!-- <button onclick="core.project.new();core.draw();">New</button>
+				<button onclick="core.project.load();core.draw();">Open</button>
+				<button onclick="core.project.save();core.draw();">Save</button> -->
+      </div>
+
+      <div id="tools"></div>
+
+      <div></div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="dialog_container"></div>
+    <script src="./dist/index.js"></script>
+  </body>
+</html>
