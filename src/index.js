@@ -1,26 +1,14 @@
-const document = {
+import Document from "./model/Document";
+import Rect from "./model/Rect";
+import Canvas from "./component/canvas";
 
-	pages: [
-		{
-			style: {},
-			name: 'page1',
-			scrollOrigin: { x:0, y:0 },
-			zoom: 1,
-			layers: [
-				
-			]
-		}
+const document = new Document();
 
-	]
-}
-
-
+document.getActivePage().layers.push(new Rect(10, 10))
 
 function load() {
-
-
-
+  let app = new Canvas({ document });
+  app.draw()
 }
 
-
-window.onload = () => load()
+window.onload = () => load();

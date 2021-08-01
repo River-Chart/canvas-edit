@@ -1,3 +1,3 @@
-class Layer {
+class Group {
 
 }

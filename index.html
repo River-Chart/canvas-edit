@@ -1,27 +1,22 @@
 <html>
   <head>
+    <style>
+      html, body{
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+
+      .tools{
+        position: absolute;
+        height: 60px;
+        width: 100%;
+        background: RGBA(44, 44, 44, 0.6);
+      }
+    </style>
   </head>
   <body>
     <!-- gui -->
-    <canvas id="canvas_grid"></canvas>
-    <canvas id="canvas"></canvas>
-
-    <div id="sidebar"></div>
-
-    <div id="menu">
-      <div id="project">
-        <!-- <button onclick="core.project.new();core.draw();">New</button>
-				<button onclick="core.project.load();core.draw();">Open</button>
-				<button onclick="core.project.save();core.draw();">Save</button> -->
-      </div>
-
-      <div id="tools"></div>
-
-      <div></div>
-    </div>
-
-    <div id="overlay"></div>
-    <div id="dialog_container"></div>
     <script src="./dist/index.js"></script>
   </body>
 </html>
