@@ -10,57 +10,34 @@ class Page {
   constructor() {}
 
   zoomIn(x, y) {
-  
     const { position } = this;
-    x /= this.zoom
-    y /= this.zoom
-    x += position.x
-    y += position.y 
 
-    let old_x = x * this.zoom
-    let old_y = y * this.zoom 
-    
-    // x *= zoomRate
-    // y *= zoomRate
-  
     this.zoom *= 1 + zoomRate;
 
-    x = x * this.zoom 
-    y = y * this.zoom 
+    x -= position.x 
+    y -= position.y 
 
-    
-    // x *= zoomRate 
-    // y *= zoomRate
-    console.log({old_x, old_y})
-    console.log(x - old_x, y - old_y)
-    
-    position.x -=(x - old_x) // this.zoom 
-    position.y -=(y - old_y) // this.zoom 
-
+    position.x -= x * zoomRate
+    position.y -=  y * zoomRate
   }
 
   zoomOut(x, y) {
     const { position, zoom } = this;
-    x /= this.zoom
-    y /= this.zoom
-    x += position.x
-    y += position.y 
-    console.log(x)
-    console.log(y)
-
+    
     this.zoom *= 1 - zoomRate;
 
-    x *= zoomRate 
-    y *= zoomRate
-    
-    position.x +=( x / this.zoom)
-    position.y +=( y / this.zoom)
+    x -= position.x 
+    y -= position.y 
+
+    position.x += x * zoomRate
+    position.y +=  y * zoomRate
+ 
   }
 
   scroll(x, y) {
     const { position, zoom } = this;
-    position.x -= (x / zoom) * scrollRate;
-    position.y -= (y / zoom) * scrollRate;
+    position.x -= (x ) * scrollRate;
+    position.y -= (y ) * scrollRate;
   }
 }
 

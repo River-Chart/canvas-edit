@@ -45,12 +45,12 @@ class Canvas {
     const { document, ctx } = this;
     const page = document.getActivePage();
     ctx.clearRect(0, 0, this.width, this.height);
-    ctx.setTransform(1,0,0,1, page.position.x * page.zoom, page.position.y * page.zoom);
+    ctx.setTransform(1,0,0,1, page.position.x , page.position.y );
 
     page.layers.forEach(layer => {
         
         ctx.fillStyle = 'RGBA(151, 98, 246, 1.00)';
-        ctx.fillRect(10 * page.zoom, 20 * page.zoom, 100 * page.zoom, 100 * page.zoom);
+        ctx.fillRect(0 * page.zoom, 0 * page.zoom, 100 * page.zoom, 100 * page.zoom);
         ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
         
     });
@@ -74,7 +74,7 @@ class Canvas {
   }
 
   wheel(e) {
-      console.log('wheel',e)
+    //   console.log('wheel',e)
     const { document } = this;
     const page = document.getActivePage();
 
