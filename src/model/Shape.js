@@ -5,5 +5,6 @@ class Shape {
        this.points.push(point) 
     }
 
+
 }
 export default Shape

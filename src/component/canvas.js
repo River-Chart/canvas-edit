@@ -1,5 +1,18 @@
-import { ctx } from "../core";
 import Toolbar from "./toolbar";
+
+
+function draw(){
+
+}
+
+function drawOffscreen(){
+
+}
+// 模式
+// 1.选择模式 可以画出选区
+// 2.单个移动模式 检测按下存在图形选择后移动图形
+// 3.画布移动模式 按下移动画布
+// 4.放置模式 放入图形
 
 class Canvas {
   constructor(arg) {
@@ -48,11 +61,9 @@ class Canvas {
     ctx.setTransform(1,0,0,1, page.position.x , page.position.y );
 
     page.layers.forEach(layer => {
-        
         ctx.fillStyle = 'RGBA(151, 98, 246, 1.00)';
         ctx.fillRect(0 * page.zoom, 0 * page.zoom, 100 * page.zoom, 100 * page.zoom);
         ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
-        
     });
     this.drawSelection()
 
@@ -100,8 +111,8 @@ class Canvas {
         selection.visible = true
         selection.offsetX_raw = e.offsetX
         selection.offsetY_raw = e.offsetY
-        selection.x =  e.offsetX - position.x 
-        selection.y =  e.offsetY - position.y 
+        selection.x = e.offsetX - position.x 
+        selection.y = e.offsetY - position.y 
     }
   }
 

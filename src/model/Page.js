@@ -1,4 +1,4 @@
-const zoomRate = 0.02;
+const zoomRate = 0.04;
 const scrollRate = 1;
 
 class Page {
@@ -22,8 +22,8 @@ class Page {
   }
 
   zoomOut(x, y) {
-    const { position, zoom } = this;
-    
+    const { position } = this;
+
     this.zoom *= 1 - zoomRate;
 
     x -= position.x 
