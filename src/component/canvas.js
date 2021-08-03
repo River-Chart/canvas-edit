@@ -54,9 +54,10 @@ class Canvas {
         ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
         
     });
-
     this.drawSelection()
+
     ctx.resetTransform()
+
     // console.log(page);
   }
 
@@ -99,8 +100,8 @@ class Canvas {
         selection.visible = true
         selection.offsetX_raw = e.offsetX
         selection.offsetY_raw = e.offsetY
-        selection.x =  e.offsetX - position.x * zoom
-        selection.y =  e.offsetY - position.y * zoom
+        selection.x =  e.offsetX - position.x 
+        selection.y =  e.offsetY - position.y 
     }
   }
 
