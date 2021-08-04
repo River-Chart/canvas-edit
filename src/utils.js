@@ -123,3 +123,9 @@ export function debounce(func, wait) {
       if (callNow) func.apply(context, args)
   }
 }
+
+export function bindClass(context, funcNames = []) {
+  funcNames.forEach((name) => {
+    context[name] = context[name].bind(context);
+  });
+}

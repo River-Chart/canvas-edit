@@ -9,6 +9,7 @@ class Toolbar {
     button.innerText = 'rect'
     this.tools.appendChild(button)
 
+   
     this.canvas.container.appendChild(this.tools)
   }
 

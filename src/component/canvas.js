@@ -1,13 +1,7 @@
 import Toolbar from "./toolbar";
+import { EventBus } from '../event'
+import { selection } from './selection'
 
-
-function draw(){
-
-}
-
-function drawOffscreen(){
-
-}
 // 模式
 // 1.选择模式 可以画出选区
 // 2.单个移动模式 检测按下存在图形选择后移动图形
@@ -18,18 +12,10 @@ class Canvas {
   constructor(arg) {
     this.create(arg);
   }
-  
-  selection = {
-      x: 0,
-      y: 0,
-      height: 0,
-      width: 0,
-      visible: false
-  }
 
   create({
     canvas = window.document.createElement("canvas"),
-    container =  window.document.body,
+    container = window.document.body,
     width = container.offsetWidth,
     height = container.offsetHeight,
     document,
@@ -45,6 +31,10 @@ class Canvas {
     this.setSize(width, height);
 
     container.appendChild(canvas);
+    container.addEventListener('wheel', e => {
+      e.stopPropagation() 
+      e.preventDefault()
+    })
 
     window.addEventListener("resize", this.resize.bind(this));
     canvas.addEventListener("wheel", this.wheel.bind(this));
@@ -61,32 +51,18 @@ class Canvas {
     ctx.setTransform(1,0,0,1, page.position.x , page.position.y );
 
     page.layers.forEach(layer => {
-        ctx.fillStyle = 'RGBA(151, 98, 246, 1.00)';
-        ctx.fillRect(0 * page.zoom, 0 * page.zoom, 100 * page.zoom, 100 * page.zoom);
-        ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
+        // ctx.fillStyle = 'RGBA(151, 98, 246, 1.00)';
+        // ctx.fillRect(0 * page.zoom, 0 * page.zoom, 100 * page.zoom, 100 * page.zoom);
+        // ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
     });
-    this.drawSelection()
+    selection.draw(this)
 
     ctx.resetTransform()
 
     // console.log(page);
   }
 
-  drawSelection(){
-    const { ctx, document, selection } = this;
-    const page = document.getActivePage();
-    
-  
-    ctx.lineWidth = 1
-    ctx.strokeStyle = 'RGBA(71, 160, 244, 1)';
-    ctx.fillStyle = 'RGBA(71, 160, 244, 0.2)';
-
-    ctx.fillRect(selection.x, selection.y, selection.width, selection.height);
-    ctx.strokeRect(selection.x, selection.y, selection.width, selection.height)
-  }
-
   wheel(e) {
-    //   console.log('wheel',e)
     const { document } = this;
     const page = document.getActivePage();
 
@@ -104,47 +80,24 @@ class Canvas {
     }
   }
 
-  mousedown(e){
-    const { selection, document } = this
-    const { position, zoom } = document.getActivePage();
-    if(e.which === 1){
-        selection.visible = true
-        selection.offsetX_raw = e.offsetX
-        selection.offsetY_raw = e.offsetY
-        selection.x = e.offsetX - position.x 
-        selection.y = e.offsetY - position.y 
-    }
+  mousedown(event){
+    EventBus.dispatchEvent('mousedown', this, event)
   }
 
-  mousemove(e){
-  
-    const { selection, document } = this
-    if(selection.visible){
-        selection.width += ( e.offsetX - selection.offsetX_raw  )
-        selection.height +=  ( e.offsetY - selection.offsetY_raw )
-
-        selection.offsetX_raw = e.offsetX
-        selection.offsetY_raw = e.offsetY
-        this.draw()
-    }
-
-
+  mousemove(event){
+    EventBus.dispatchEvent('mousemove', this, event)
   }
 
-  mouseup(e){
-    this.selection = {
-        x: 0,
-        y: 0,
-        height: 0,
-        width: 0,
-        visible: false
-    }
-    this.draw()
+  mouseup(event){
+    EventBus.dispatchEvent('mouseup', this, event)
+  }
+
+  keydown(event){
+    EventBus.dispatchEvent('mouseup', this, event)
   }
 
   setSize(width, height) {
     const { canvas } = this;
-
     canvas.width = width;
     canvas.height = height;
     this.width = width;

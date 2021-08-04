@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node esbuild.mjs"
+    "build": "node esbuild.mjs & http-server -c-1"
   },
   "repository": {
     "type": "git",
