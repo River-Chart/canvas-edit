@@ -7,6 +7,9 @@ class Page {
   position = { x: 0, y: 0 };
   zoom = 1;
   layers = [];
+  layerHoverId = null;
+  layerSelect = [];
+
   constructor() {}
 
   zoomIn(x, y) {
@@ -39,6 +42,10 @@ class Page {
     position.x -= (x ) * scrollRate;
     position.y -= (y ) * scrollRate;
   }
+
+
+
+
 }
 
 export default Page;

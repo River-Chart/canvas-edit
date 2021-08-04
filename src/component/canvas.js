@@ -50,11 +50,23 @@ class Canvas {
     ctx.clearRect(0, 0, this.width, this.height);
     ctx.setTransform(1,0,0,1, page.position.x , page.position.y );
 
-    page.layers.forEach(layer => {
-        // ctx.fillStyle = 'RGBA(151, 98, 246, 1.00)';
-        // ctx.fillRect(0 * page.zoom, 0 * page.zoom, 100 * page.zoom, 100 * page.zoom);
-        // ctx.fillRect(20 * page.zoom, 200 * page.zoom, 100 * page.zoom, 100 * page.zoom);
+    page.layers.forEach((layer, i) => {
+        layer.draw(ctx, page.zoom)
     });
+
+    page.layers.forEach((layer, i) => {
+
+        if(page.layerHoverId === i){
+            layer.drawStroke(ctx, page.zoom)
+        }
+        if( page.layerSelect.includes(i) ){
+            layer.drawStroke(ctx, page.zoom)
+            layer.drawPoints(ctx, page.zoom)
+        }
+       
+    });
+
+  
     selection.draw(this)
 
     ctx.resetTransform()
@@ -81,11 +93,40 @@ class Canvas {
   }
 
   mousedown(event){
+    const { ctx, document } = this;
+    const page = document.getActivePage();
+    let x = (event.offsetX - page.position.x)
+    let y = (event.offsetY  - page.position.y) 
+    page.layerSelect = []
+    page.layers.forEach((layer, i) => {
+        if (ctx.isPointInPath(layer.getPath(page.zoom), x, y)){
+            page.layerSelect = [i]
+        }
+    })
+    this.draw()
+
     EventBus.dispatchEvent('mousedown', this, event)
   }
 
   mousemove(event){
+
+
+    const { ctx, document } = this;
+    const page = document.getActivePage();
+    let x = (event.offsetX - page.position.x)
+    let y = (event.offsetY  - page.position.y) 
+    page.layerHoverId = null
+    page.layers.forEach((layer, i) => {
+        if (ctx.isPointInPath(layer.getPath(page.zoom), x, y)){
+            page.layerHoverId = i
+        }
+    })
+    this.draw()
+
     EventBus.dispatchEvent('mousemove', this, event)
+
+
+
   }
 
   mouseup(event){

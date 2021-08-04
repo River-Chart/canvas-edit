@@ -4,7 +4,8 @@ import Canvas from "./component/canvas";
 
 const document = new Document();
 
-document.getActivePage().layers.push(new Rect(10, 10))
+document.getActivePage().layers.push(new Rect(10, 10, 100, 60))
+document.getActivePage().layers.push(new Rect(100, 50, 100, 60))
 
 function load() {
   const div = window.document.createElement('div')
