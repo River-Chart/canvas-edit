@@ -44,11 +44,12 @@ class Rect extends Shape {
     }
 
     drawRectPont(ctx, x, y){
-        ctx.rect(x-2, y-2, 5, 5)
+        const path = new Path2D();
+        path.rect(x-2, y-2, 5, 5)
         ctx.fillStyle = "#fff"
         ctx.strokeSyle = "RGBA(79, 165, 242, 1.00)"
-        ctx.stroke();
-        ctx.fill();
+        ctx.stroke(path);
+        ctx.fill(path);
     }
 }
 export default Rect
