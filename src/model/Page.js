@@ -43,8 +43,9 @@ class Page {
     position.y -= (y ) * scrollRate;
   }
 
-
-
+  getlayerSelect(){
+      return this.layerSelect.map(i => this.layers[i])
+  }
 
 }
 
