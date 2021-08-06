@@ -1,12 +1,20 @@
 import { EventBus } from "../event";
-import { bindClass } from '../utils'
+import { bindClass } from "../utils";
 
+function isIntersect(RectA, RectB) {
+  return !(
+    (RectB.x + RectB.width) < RectA.x ||
+    RectB.x > (RectA.x + RectA.width) ||
+    (RectB.y + RectB.height) < RectA.y ||
+    RectB.y > (RectA.y + RectA.height)
+  );
+}
 
 class Selection {
   constructor() {
     bindClass(this, ["mousedown", "mousemove", "mouseup", "draw"]);
 
-    EventBus.addEventListener("mousedown", this.mousedown);
+    EventBus.addEventListener("selectionDown", this.mousedown);
   }
 
   selection = {
@@ -35,11 +43,21 @@ class Selection {
 
   mousemove(canvas, event) {
     const { selection } = this;
+    const { ctx, document } = canvas;
+    const page = document.getActivePage();
     if (selection.visible) {
       selection.width += event.offsetX - selection.offsetX_raw;
       selection.height += event.offsetY - selection.offsetY_raw;
       selection.offsetX_raw = event.offsetX;
       selection.offsetY_raw = event.offsetY;
+      
+      page.layerSelect = []
+      page.layers.forEach((layer, i) => {
+        if ( isIntersect(selection, layer.frame) ) {
+          page.layerSelect.push(i)
+        }
+      });
+
       canvas.draw();
     }
   }

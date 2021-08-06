@@ -31,19 +31,23 @@ class Rect extends Shape {
         ctx.stroke(path);
     }
 
-    drawPoints(ctx){
-        const {x, y, width, height } = this.frame
+    drawPoints(ctx, zoom){
+        let { x, y, width, height } = this.frame
+        x *= zoom
+        y *= zoom
+        width *= zoom
+        height *= zoom
         const topLeft = [x, y]
         const topRight = [x + width, y]
         const bottomLeft = [x, y + height]
         const bottomRight = [x + width, y + height];
         [topLeft, topRight, bottomLeft, bottomRight].forEach(([x, y]) => {
-            this.drawRectPont(ctx, x, y)
+            this.drawRectPont(ctx,zoom, x, y)
         });
 
     }
 
-    drawRectPont(ctx, x, y){
+    drawRectPont(ctx,zoom, x, y){
         const path = new Path2D();
         path.rect(x-2, y-2, 5, 5)
         ctx.fillStyle = "#fff"

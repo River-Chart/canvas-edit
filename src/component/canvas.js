@@ -13,6 +13,8 @@ class Canvas {
     this.create(arg);
   }
 
+  mode = "select" // select
+
   create({
     canvas = window.document.createElement("canvas"),
     container = window.document.body,
@@ -105,11 +107,10 @@ class Canvas {
     })
     this.draw()
 
-    EventBus.dispatchEvent('mousedown', this, event)
+    EventBus.dispatchEvent('selectionDown', this, event)
   }
 
   mousemove(event){
-
 
     const { ctx, document } = this;
     const page = document.getActivePage();
